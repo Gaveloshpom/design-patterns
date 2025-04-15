@@ -26,14 +26,3 @@
 
 - Додаткове ускладнення коду через велику кількість інтерфейсів та класів
 - Важче додавати нові продукти в уже наявну фабрику
-
-# Client
-def create_ui(factory: GUIFactory):
-    button = factory.create_button()
-    checkbox = factory.create_checkbox()
-    print(button.render())
-    print(checkbox.render())
-
-# Використання
-create_ui(WindowsFactory())
-create_ui(MacOSFactory())
