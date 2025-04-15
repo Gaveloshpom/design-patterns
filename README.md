@@ -51,3 +51,19 @@ class ConcreteFactory{
   class AbstractProduct{
   }
 ```
+
+```mermaid
+sequenceDiagram
+  participant Client as :Client
+  participant AbstractFactory as factory: Factory1
+  participant ProductA as pa1: ProductA1
+  participant ProductB as pb1: ProductB1
+
+  Client ->>+ AbstractFactory: create ProductA()
+  AbstractFactory ->>- ProductA: new
+  AbstractFactory -->> Client: return pa
+
+  Client ->>+ AbstractFactory: create ProductB()
+  AbstractFactory ->>- ProductB: new
+  AbstractFactory -->> Client: return pb
+```
