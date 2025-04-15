@@ -26,3 +26,28 @@
 
 - Додаткове ускладнення коду через велику кількість інтерфейсів та класів
 - Важче додавати нові продукти в уже наявну фабрику
+
+```mermaid
+classDiagram
+direction LR
+Client --> AbstractFactory
+Client --> AbstractProduct
+AbstractFactory <|-- ConcreteFactory
+AbstractProduct <|-- ProductA
+AbstractProduct <|-- ProductB
+ProductA <.. ConcreteFactory : creates
+ProductB <.. ConcreteFactory : creates
+
+  class Client {
+  }
+  class AbstractFactory{
+    +CreateProductA()
+    +CreateProductB()
+  }
+class ConcreteFactory{
+    +Create productA()
+    +Create productB()
+  }
+  class AbstractProduct{
+  }
+```
