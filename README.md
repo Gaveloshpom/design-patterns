@@ -33,10 +33,10 @@ direction LR
 Client --> AbstractFactory
 Client --> AbstractProduct
 AbstractFactory <|-- ConcreteFactory
-AbstractProduct <|-- ProductA
-AbstractProduct <|-- ProductB
-ProductA <.. ConcreteFactory : creates
-ProductB <.. ConcreteFactory : creates
+AbstractProduct <|-- ConcreteProductA
+AbstractProduct <|-- ConcreteProductB
+ConcreteProductA <.. ConcreteFactory : creates
+ConcreteProductB <.. ConcreteFactory : creates
 
   class Client {
   }
