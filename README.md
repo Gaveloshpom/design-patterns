@@ -209,3 +209,46 @@ sequenceDiagram
     Client->>ElementB: Accept(visitor)
     ElementB->>ConcreteVisitor: VisitConcreteElementB(this)
 ```
+
+# Патерн Balking
+
+## Опис
+
+**Balking** — Патерн Balking використовується, коли об’єкт має певний стан, і операцію можна виконати лише якщо цей стан дозволяє це.
+
+Якщо поточний стан невідповідний — операція ігнорується (або повертає одразу).
+
+## Структура
+
+- **Context (GuardedObject)** — об'єкт, над яким викликається операція.
+- **Thread** — 	потік, який викликає метод.
+- **Balking check** — перевірка стану перед виконанням.
+- **Lock** — синхронізація, щоб уникнути race condition.
+
+```mermaid
+classDiagram
+    class WashingMachine {
+        -bool isRunning
+        +Start()
+        +Run()
+    }
+
+    class Thread {
+        +Run()
+    }
+
+    Thread --> WashingMachine : calls Start()
+```
+
+```mermaid
+sequenceDiagram
+    participant Thread1
+    participant WashingMachine
+
+    Thread1->>WashingMachine: Start()
+    alt isRunning == false
+        WashingMachine->>WashingMachine: Run()
+    else isRunning == true
+        WashingMachine-->>Thread1: Ignore (balking)
+    end
+```
