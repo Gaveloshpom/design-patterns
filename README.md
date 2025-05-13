@@ -128,3 +128,84 @@ sequenceDiagram
     Facade->>Class2: operation2()
     Facade->>Class3: operation3()
 ```
+
+# Патерн Visitor
+
+## Опис
+
+**Visitor** — це поведінковий патерн, який дозволяє додати нову операцію для цілої ієрархії класів, не змінюючи код цих класів.
+
+## Структура
+
+- **Visitor** — інтерфейс або абстрактний клас, що оголошує методи Visit() для кожного типу елементів.
+- **ConcreteVisitor** — реалізує конкретні операції для кожного типу елементів.
+- **Element** — інтерфейс або абстрактний клас для об’єктів, які приймають відвідувача (Accept(visitor)).
+- **ConcreteElement** — реалізує Accept(visitor) і викликає відповідний метод у відвідувача.
+- **Client** — 	ініціює відвідування об’єктів.
+
+## Переваги
+
+- Спрощує додавання операцій, працюючих зі складними структурами об’єктів
+- Об’єднує споріднені операції в одному класі
+- Відвідувач може накопичувати стан при обході структури елементів
+
+## Недоліки
+
+- Патерн невиправданий, якщо ієрархія елементів часто змінюється
+- Може призвести до порушення інкапсуляції елементів
+
+```mermaid
+classDiagram
+    class Client {
+        +VisitConcreteElementA(a)
+        +VisitConcreteElementB(b)
+    }
+
+    class Visitor {
+        <<interface>>
+        +VisitConcreteElementA(a)
+        +VisitConcreteElementB(b)
+    }
+
+    class ConcreteVisitor {
+        +VisitConcreteElementA(a)
+        +VisitConcreteElementB(b)
+    }
+
+    class Element {
+        <<interface>>
+        +Accept(visitor)
+    }
+
+    class ConcreteElementA {
+        +Accept(visitor)
+        +OperationA()
+    }
+
+    class ConcreteElementB {
+        +Accept(visitor)
+        +OperationB()
+    }
+
+    Client --> Element
+    Client --> ConcreteVisitor
+    Visitor <|-- ConcreteVisitor
+    Element <|-- ConcreteElementA
+    Element <|-- ConcreteElementB
+    ConcreteElementA --> Visitor : Accept()
+    ConcreteElementB --> Visitor : Accept()
+```
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant ConcreteVisitor
+    participant ElementA
+    participant ElementB
+
+    Client->>ElementA: Accept(visitor)
+    ElementA->>ConcreteVisitor: VisitConcreteElementA(this)
+
+    Client->>ElementB: Accept(visitor)
+    ElementB->>ConcreteVisitor: VisitConcreteElementB(this)
+```
